@@ -3,7 +3,7 @@ let scrollWidth;
 let body = document.getElementById('body');
 const container = document.getElementById('container');
 let car = document.createElement('img');
-car.src = 'img/auto.png';
+car.src = 'img/auto2.png';
 car.className = 'car';
 car.alt = 'car';
 container.appendChild(car);
@@ -38,11 +38,56 @@ body.appendChild(sky);
 let sun = document.createElement('div');
 sun.className = 'sun';
 sky.appendChild(sun);
+let cloud = document.createElement('img');
+cloud.src = 'img/cloud.png';
+cloud.alt = 'Облако'
+cloud.className = 'cloud';
+sky.appendChild(cloud);
+let cloud2 = document.createElement('img');
+cloud2.src = 'img/cloud.png';
+cloud2.alt = 'Облако'
+cloud2.className = 'cloud2';
+sky.appendChild(cloud2);
+
+let grinvilArr = [
+    ['Г','р','и','н','в','и','л','ь'],
+    [' ','м','е','с','т','о',' ',' '],
+    [' ',' ','м','е','ч','т','ы',' ']
+];
+let step = 0;
+let titlePlace = document.createElement('div');
+titlePlace.className = 'title-place';
+body.appendChild(titlePlace);
+
+
+grinvilArr[0].map((item, index) => {
+    let simbol = document.createElement('div');
+    let greenvill = document.createElement('div');
+    let place = document.createElement('div');
+    let dream = document.createElement('div');
+    let delimiter = document.createElement('div');
+    let delimiter2 = document.createElement('div');
+    delimiter.className = 'delimiter';
+    delimiter2.className = 'delimiter2';
+    greenvill.className = 'greenvill';
+    place.className = 'place';
+    dream.className = 'dream';
+    greenvill.innerText = item.toUpperCase();
+    place.innerText = grinvilArr[1][index].toUpperCase();
+    dream.innerText = grinvilArr[2][index].toUpperCase();
+    simbol.className = 'title-simbol';
+    simbol.appendChild(delimiter);
+    simbol.appendChild(delimiter2);
+    simbol.appendChild(greenvill);
+    simbol.appendChild(place);
+    simbol.appendChild(dream);
+    titlePlace.appendChild(simbol);
+});
 
 let position = 0;
 
-window.addEventListener('mousemove', function (event) {
-    scrollWidth = event.target.scrollWidth;
+document.addEventListener('mousemove', function (event) {
+    scrollWidth = body.scrollWidth;
 
     if (event.pageX <= scrollWidth - car.width) {
         car.style.left = `${event.pageX}px`;
@@ -69,7 +114,7 @@ window.addEventListener('mousemove', function (event) {
         tree3.style.left = `${tree3.offsetLeft - 1}px`;
         house1.style.left = `${house1.offsetLeft - 1}px`;
         house2.style.left = `${house2.offsetLeft - 1}px`;
-    } else if (event.pageX < position && tree3.offsetLeft + tree3.width <= event.clientX) {
+    } else if (event.pageX < position && tree3.offsetLeft + tree3.width <= event.pageX) {
         tree.style.left = `${tree.offsetLeft + 1}px`;
         tree2.style.left = `${tree2.offsetLeft + 1}px`;
         tree3.style.left = `${tree3.offsetLeft + 1}px`;
@@ -78,3 +123,13 @@ window.addEventListener('mousemove', function (event) {
     }
     position = event.pageX;
 });
+
+document.addEventListener('wheel', function (e) {
+    if (e.deltaY < 0 && cloud.offsetLeft <= scrollWidth  +  cloud.width && cloud2.offsetLeft >= - cloud.width) {
+        cloud.style.left = `${cloud.offsetLeft + 52}px`;
+        cloud2.style.left = `${cloud2.offsetLeft - 52}px`;
+    } else if (e.deltaY > 0 && cloud.offsetLeft >= - cloud.width && cloud2.offsetLeft <= cloud2.offsetLeft + cloud.width) {
+        cloud.style.left = `${cloud.offsetLeft - 52}px`;
+        cloud2.style.left = `${cloud2.offsetLeft + 52}px`;
+    }
+})
